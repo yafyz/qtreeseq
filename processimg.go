@@ -27,7 +27,7 @@ func quadifyImage(src *image.RGBA, quadsrc *image.RGBA, minSize int, tolerance u
 			alpha = uint8(sum/count)
 		}
 
-		if invert {
+		if !invert {
 			alpha = 255-alpha
 		}
 
