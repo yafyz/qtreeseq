@@ -35,3 +35,7 @@ useful ffmpeg commands:
 
     gen transparent gif from sequence and pallet:
         ffmpeg -framerate 25 -i %d.png -i palette.png -lavfi paletteuse=alpha_threshold=128 -gifflags -offsetting out.gif
+
+    above but overlayed over static color:
+        ffmpeg -f lavfi -i color=c=18191c:s=480x360 -i %d.png -shortest -filter_complex "[0:v][1:v]overlay=shortest=1[out],[out]palettegen=[bruh]" -map "[bruh]" palette.png
+        ffmpeg -f lavfi -i color=c=18191c:s=480x360 -i %d.png -i palette.png -shortest -filter_complex "[0:v][1:v]overlay=shortest=1[out];[out]paletteuse=[out2]" -map "[out2]" -gifflags -offsetting out.gif
