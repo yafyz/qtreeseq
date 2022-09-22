@@ -14,7 +14,7 @@ import (
 
 func main() {
 	inFrameStart := int64(1)
-	inFrameEnd := int64(0)
+	inFrameEnd := int64(-1)
 
 	threadCount := runtime.NumCPU()
 	invert := false
@@ -103,7 +103,7 @@ func main() {
 	go (func () {
 		repFrameCounter := 0
 
-		for i := inFrameStart; inFrameEnd > 0 && i < inFrameEnd; i++ {
+		for i := inFrameStart; i < inFrameEnd || inFrameEnd < 0; i++ {
 			f, err := os.Open(fmt.Sprintf("%s/%d.png", inDir, i))
 			if err != nil { break }
 			workQueue <- &frameInfo{
@@ -119,6 +119,7 @@ func main() {
 	})()
 
 	for i := 0; i < threadCount; i++ {
+		i := i
 		go (func() {
 			for fi := range workQueue {
 				quadded := quadifyImage(fi.frame, fi.repframe, quadMinSize, quadTolerance, invert)
