@@ -1,5 +1,6 @@
-in
-old
-out
-rep
-things
+*
+!.gitignore
+!readme.txt
+!*.go
+!*.mod
+!*.sum
